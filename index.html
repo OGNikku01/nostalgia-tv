@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff"><title>Nostalgia TV — Bachpan Wala TV</title>
+<style>
+:root{--ink:#192139;--muted:#778097;--line:#e9ecf3;--purple:#7055e8}
+*{box-sizing:border-box}body{margin:0;background:#f7f8fc;color:var(--ink);font:15px system-ui,Arial}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+.top,main{max-width:1160px;margin:auto;padding:14px 20px}.top{display:flex;align-items:center;gap:12px}
+.logo{background:linear-gradient(135deg,#7658ed,#e76ca9);color:white;border-radius:13px;padding:10px;font-size:22px}
+.brand{font-weight:850;font-size:19px}.muted{color:var(--muted);font-size:12px}.spacer{flex:1}
+.pill{background:#f0edff;color:#6049ce;padding:7px 12px;border-radius:30px;font-size:12px;font-weight:bold}
+.hero{background:linear-gradient(110deg,#211b4b,#6248bd,#a45dbb);color:white;border-radius:22px;padding:27px;display:flex;justify-content:space-between;align-items:center;gap:15px;margin:12px 0 20px}
+.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.1;margin:0 0 9px}.hero p{color:#e6e0ff;margin:0;max-width:650px}.kite{font-size:60px}
+.searchrow{display:flex;gap:9px;margin:18px 0;flex-wrap:wrap}.search{flex:1;min-width:210px;padding:13px;border:1px solid var(--line);border-radius:13px;font:inherit}
+.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:12px}.tab{border:1px solid var(--line);background:#fff;border-radius:30px;padding:9px 14px;white-space:nowrap;cursor:pointer;font-weight:650;color:#586177}.tab.active{background:#211b4b;color:white}
+.head{display:flex;justify-content:space-between;align-items:end;margin:18px 0 12px}.head h2{font-size:20px;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:13px}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:0 8px 24px #26345b0b}
+.tile{height:84px;border-radius:12px;display:grid;place-items:center;font-size:33px;color:white;margin-bottom:11px}
+.card h3{font-size:14px;margin:0 0 3px}.btn{border:0;border-radius:9px;padding:9px;background:#eeeaff;color:#6049ce;font-weight:750;cursor:pointer;width:100%;font-size:12px;margin-top:7px}
+.player{display:grid;grid-template-columns:1.5fr 1fr;background:#111522;color:white;border-radius:18px;overflow:hidden;margin:18px 0}
+.screen{min-height:230px;display:grid;place-items:center;text-align:center;padding:20px;background:radial-gradient(#343950,#111522 70%)}.screen b{font-size:55px}
+.info{padding:22px;align-self:center}.info p{font-size:13px;color:#bbc2d2}.link{color:#a99aff;font-size:12px;font-weight:bold}
+.note{background:#fff8e8;border:1px solid #f2e3b8;color:#73551a;border-radius:12px;padding:13px;font-size:13px;margin:15px 0}
+.library{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}.show{display:flex;align-items:center;gap:12px}.poster{width:58px;height:68px;border-radius:10px;display:grid;place-items:center;color:white;font-size:26px;flex:none}
+.show h3{font-size:14px;margin:0}.show p{font-size:11px;color:var(--muted);margin:3px 0}
+a{text-decoration:none}footer{text-align:center;color:var(--muted);font-size:12px;padding:30px}
+@media(max-width:680px){.top,main{padding-left:14px;padding-right:14px}.player{grid-template-columns:1fr}.screen{min-height:190px}.kite{font-size:42px}}
+</style></head><body>
+<header><div class="top"><div class="logo">📺</div><div><div class="brand">Nostalgia TV</div><div class="muted">Bachpan wala TV · Live channels & cartoons</div></div><div class="spacer"></div><span class="pill">YOUR TV HUB</span></div></header>
+<main>
+<section class="hero"><div><h1>Wapas chalo bachpan mein! 💜</h1><p>Hindi TV categories, kids channels aur childhood cartoons — sab ek jagah. Official sources se dekho.</p></div><div class="kite">🪁</div></section>
+<div class="searchrow"><input id="search" class="search" placeholder="Search channel ya cartoon..."><button class="tab" id="fav">♡ Favorites</button></div>
+<div class="tabs" id="tabs"></div>
+<section class="player" id="player"><div class="screen"><div><b>📺</b><h3 id="playing">Choose a channel</h3><div class="muted" id="desc">Select a channel card below.</div></div></div><div class="info"><h2>Now watching</h2><p id="playertext">A channel plays here only after an authorized stream or official embed has been configured. This site does not unlock paid channels.</p><a class="link" id="official" href="https://prasarbharati.gov.in/en/waves/" target="_blank" rel="noopener">Explore official Prasar Bharati WAVES ↗</a></div></section>
+<div class="note"><b>Important:</b> Channel names are a directory, not a promise of free live playback. Paid channels require authorized access. GitHub Pages hosts this website only; it cannot host or bypass TV streams.</div>
+<div class="head"><h2 id="heading">All channels</h2><span class="muted" id="count"></span></div><div class="grid" id="channels"></div>
+<div class="head"><h2>Childhood cartoon library</h2><span class="muted">Official video searches</span></div><div class="library" id="cartoons"></div>
+<div class="note">Cartoon buttons open YouTube search results, not guaranteed official episode links. Choose uploads from the broadcaster or an authorized distributor.</div>
+<footer>Nostalgia TV · Static GitHub Pages project · No streams are hosted here.</footer>
+</main>
+<script>
+// Add broadcaster-authorized URLs only. Do not use scraped or pirated IPTV links.
+const channels=[
+["DD National","Entertainment","📺","#e85d75"],["DD News","News","📰","#3478c8"],["DD Sports","Sports","🏏","#239b85"],["DD Bharati","Culture","🎭","#9b6bd6"],["DD Kisan","Information","🌾","#62a66a"],["DD India","News","🌍","#4673b9"],["DD Urdu","Entertainment","✨","#4b9b9b"],
+["Aaj Tak","News","🗞️","#e64b4b"],["ABP News","News","📡","#d84b68"],["India TV","News","📺","#3d7fc4"],["News18 India","News","📰","#c94a4a"],["Zee News","News","🔴","#bd4141"],["NDTV India","News","🎙️","#4775ad"],
+["Star Plus","Entertainment","⭐","#d65a91"],["Zee TV","Entertainment","🎬","#7958c8"],["Colors","Entertainment","🌈","#bd5eaa"],["Sony SAB","Entertainment","😄","#4c9dc4"],["Sony Entertainment Television","Entertainment","🎭","#8b62bd"],["&TV","Entertainment","✨","#d58b48"],["Dangal","Entertainment","🎞️","#c85c48"],
+["Hungama TV","Kids & Cartoons","🧒","#ed7b36"],["Disney Channel","Kids & Cartoons","🏰","#477bd0"],["Cartoon Network","Kids & Cartoons","🟦","#333"],["Pogo","Kids & Cartoons","🐯","#e1a23b"],["Discovery Kids","Kids & Cartoons","🦕","#45a66c"],["Sonic","Kids & Cartoons","⚡","#4a82d2"],["Nick","Kids & Cartoons","🧡","#ed8537"],["Nick Jr.","Kids & Cartoons","🌟","#4cae91"],["Disney Junior","Kids & Cartoons","🐭","#d56b91"],["Sony YAY!","Kids & Cartoons","🎉","#d75c68"],
+["Zee Cinema","Movies","🍿","#8b60b8"],["Sony MAX","Movies","🎥","#bd5d4b"],["Star Gold","Movies","🌟","#c79537"],["Colors Cineplex","Movies","🎬","#b35a9b"],["&Pictures","Movies","🎞️","#547fc0"],["B4U Movies","Movies","🍿","#4c9a9c"],
+["Aastha","Devotional","🙏","#b77a43"],["Sanskar","Devotional","🪔","#bd8a4d"],["Sadhna","Devotional","🌼","#d18a52"],["India TV Spiritual","Devotional","🕉️","#a66caa"]
+].map(x=>({name:x[0],cat:x[1],emoji:x[2],color:x[3],stream:"",embed:"",official:""}));
+const cartoons=["Shin Chan","Doraemon","Motu Patlu","Chhota Bheem","Roll No. 21","Ninja Hattori","Perman","Oggy and the Cockroaches","Tom and Jerry","Oswald","Mr. Bean Animated","The Jungle Book","Mickey Mouse","DuckTales","Pokémon","Ben 10","Courage the Cowardly Dog","Powerpuff Girls","Scooby-Doo","Kitretsu"];
+let cat="All",favorites=new Set(),favOnly=false;
+const $=id=>document.getElementById(id), categories=["All","Entertainment","Kids & Cartoons","Movies","Sports","News","Devotional","Culture","Information"];
+function render(){ $("tabs").innerHTML=categories.map(c=>`<button class="tab ${cat===c?'active':''}" data-cat="${c}">${c}</button>`).join("");document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{cat=b.dataset.cat;render()});
+let q=$("search").value.toLowerCase(),list=channels.filter(c=>(cat==="All"||c.cat===cat)&&(!favOnly||favorites.has(c.name))&&(c.name+" "+c.cat).toLowerCase().includes(q));
+$("heading").textContent=favOnly?"Favorite channels":cat==="All"?"All channels":cat;$("count").textContent=list.length+" channels";
+$("channels").innerHTML=list.map(c=>`<article class="card"><div class="tile" style="background:linear-gradient(135deg,${c.color},#202744)">${c.emoji}</div><h3>${c.name}</h3><div class="muted">${c.cat}</div><button class="btn" data-play="${c.name}">View watch options</button><button class="btn" style="background:#f4f4f8;color:#646b7b" data-fav="${c.name}">${favorites.has(c.name)?"♥ Saved":"♡ Add favorite"}</button></article>`).join("")||"<p>No matching channels.</p>";
+document.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>select(b.dataset.play));document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{let n=b.dataset.fav;favorites.has(n)?favorites.delete(n):favorites.add(n);render()})}
+function select(name){let c=channels.find(x=>x.name===name);$("playing").textContent=c.name;$("desc").textContent=c.cat;$("playertext").textContent="No verified authorized web stream is configured for this channel yet. Add the broadcaster-approved HLS or official embed URL in the channels array in index.html, or use the broadcaster's official app/website.";$("official").href=c.official||"https://prasarbharati.gov.in/en/waves/";$("official").textContent=c.official?"Open official channel ↗":"Explore official viewing options ↗";$("player").scrollIntoView({behavior:"smooth",block:"center"})}
+$("search").addEventListener("input",render);$("fav").onclick=()=>{favOnly=!favOnly;$("fav").textContent=favOnly?"Show all":"♡ Favorites";render()};
+$("cartoons").innerHTML=cartoons.map((n,i)=>`<article class="card show"><div class="poster" style="background:linear-gradient(135deg,hsl(${i*31%360} 55% 55%),#272444)">${["🐱","🚀","🐒","💪","🎒"][i%5]}</div><div><h3>${n}</h3><p>Find official Hindi episodes</p><a class="link" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${encodeURIComponent(n+" Hindi official episodes")}">Search episodes ↗</a></div></article>`).join("");
+render();
+</script></body></html>
